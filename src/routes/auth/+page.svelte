@@ -1,4 +1,10 @@
 <script lang="ts">
+	const handleClick = async () => {
+		const res = await fetch('/api/auth/google');
+		const data = await res.json();
+
+		window.location = data.url;
+	};
 </script>
 
 <svelte:head>
@@ -12,7 +18,7 @@
 	<div>
 		<button
 			class=" mt-2 flex h-12 w-full items-center justify-start rounded-md bg-gray-200 pl-4 text-sm text-gray-600 hover:bg-gray-300"
-			on:click={() => {}}
+			on:click={() => handleClick()}
 		>
 			<svg
 				class="mr-2 inline-block h-5 w-5"
