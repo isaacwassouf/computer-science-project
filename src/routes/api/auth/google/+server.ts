@@ -1,13 +1,13 @@
-import type { RequestHandler } from '../$types';
+import type { RequestHandler } from './$types';
 import { GOOGLE_CLIENT_ID, GOOGLE_REDIRECT } from '$env/static/private';
 import {
-	PUBLIC_GOOGLE_OPENID_CONFIG_URL,
+	PUBLIC_GOOGLE_OIDC_CONFIG_URL,
 	PUBLIC_FALLBACK_GOOGLE_AUTHORIZATION_ENDPOINT
 } from '$env/static/public';
 
 export const GET: RequestHandler = async ({ fetch }) => {
 	// discover the google auth URL
-	const googleOpenIDConfigURL = new URL(PUBLIC_GOOGLE_OPENID_CONFIG_URL);
+	const googleOpenIDConfigURL = new URL(PUBLIC_GOOGLE_OIDC_CONFIG_URL);
 	const googleOpenIDConfigResponse = await fetch(googleOpenIDConfigURL.toString());
 	const googleOpenIDConfigData = await googleOpenIDConfigResponse.json();
 
