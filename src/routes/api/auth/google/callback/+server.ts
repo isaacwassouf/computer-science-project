@@ -1,8 +1,10 @@
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { exchangeCodeWithTokens, verifyIDToken } from '$lib/utils/google-oidc';
-import type { JwtPayload } from 'jsonwebtoken';
-import { handleDatabaseInsertion } from '$lib/utils/database';
+import { type JwtPayload } from 'jsonwebtoken';
+import { getUserByEmail, handleDatabaseInsertion } from '$lib/utils/database';
+import type { User } from '$lib/db/types';
+import { createUserToken } from '$lib/utils/tokens';
 
 export const GET: RequestHandler = async ({ cookies, url }) => {
 	// get the code and state from the query string
@@ -25,5 +27,16 @@ export const GET: RequestHandler = async ({ cookies, url }) => {
 	// insert the user into the database if it does not exist yet
 	await handleDatabaseInsertion(payload);
 
-	return new Response('Hello, world!');
+	// get the user from the database
+	const user: User = await getUserByEmail(payload.email);
+
+	const userToken = createUserToken(user);
+
+	return new Response(null, {
+		status: 302,
+		headers: {
+			Location: '/profile',
+			'Set-Cookie': `userToken=${userToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${tokens.expires_in}`
+		}
+	});
 };
