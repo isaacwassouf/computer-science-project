@@ -2,6 +2,7 @@ import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { exchangeCodeWithTokens, verifyIDToken } from '$lib/utils/google-oidc';
 import type { JwtPayload } from 'jsonwebtoken';
+import { handleDatabaseInsertion } from '$lib/utils/database';
 
 export const GET: RequestHandler = async ({ cookies, url }) => {
 	// get the code and state from the query string
@@ -15,11 +16,14 @@ export const GET: RequestHandler = async ({ cookies, url }) => {
 		error(403, 'Invalid state');
 	}
 
-    // exchange the code for tokens
-    const tokens = await exchangeCodeWithTokens(code);
+	// exchange the code for tokens
+	const tokens = await exchangeCodeWithTokens(code);
 
-    // verify the id token
-    const payload: JwtPayload = await verifyIDToken(tokens.id_token);
-    
-    return new Response('Hello, world!');
+	// verify the id token
+	const payload: JwtPayload = await verifyIDToken(tokens.id_token);
+
+	// insert the user into the database if it does not exist yet
+	handleDatabaseInsertion(payload);
+
+	return new Response('Hello, world!');
 };

@@ -13,5 +13,11 @@ services:
       - db_data:/var/lib/mysql
     ports:
       - 3306:3306
+    networks:
+      - proxy
 volumes:
   db_data:
+
+networks:
+  proxy:
+    external: true
