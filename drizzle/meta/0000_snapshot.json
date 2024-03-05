@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "3282e9b3-381f-42cf-ab34-8fcd3bc4a13e",
+  "id": "979de963-31d1-4b7d-bdcc-df15f10f8f8d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "users": {
@@ -14,18 +14,18 @@
           "notNull": true,
           "autoincrement": true
         },
-        "full_name": {
-          "name": "full_name",
+        "name": {
+          "name": "name",
           "type": "varchar(256)",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "email": {
           "name": "email",
           "type": "varchar(256)",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "image_url": {
