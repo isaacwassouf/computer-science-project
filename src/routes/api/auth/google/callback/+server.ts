@@ -23,7 +23,7 @@ export const GET: RequestHandler = async ({ cookies, url }) => {
 	const payload: JwtPayload = await verifyIDToken(tokens.id_token);
 
 	// insert the user into the database if it does not exist yet
-	handleDatabaseInsertion(payload);
+	await handleDatabaseInsertion(payload);
 
 	return new Response('Hello, world!');
 };
