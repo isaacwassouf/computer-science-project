@@ -1,38 +1,33 @@
-# create-svelte
+# Computer Science Project - Implementation of an OpenID Connect Rely Party
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This is the final submission for the **Project: Software Engineering (DLMCSPSE01)** course.
 
-## Creating a project
+# Installation
 
-If you're seeing this, you've probably already done this step. Congrats!
+In order to install the project successfully please follow the following steps.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- If not already installed, install [pnpm](https://pnpm.io/installation)
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- Create the ```.env``` file for the PWA
+	```bash
+	cp .env.template .env
+	```
+- Set the ```CLIENT_ID``` and ```CLIENT_SECRET``` values mentioned in the project report to the varibales in the ```.env``` file
+- Run the database docker container
+	```bash
+	docker compose up -d
+	```
+- Run the database migrations
+	```bash
+	pnpm drizzle-migrate
+	```
+- Run the database migrations
+	```bash
+	pnpm drizzle-migrate
+	```
+- Run the SvelkteKit application
+	```bash
+	pnpm dev
+	```
+ - Navigate to [http://localhost:5173/auth](http://localhost:5173/auth) to test the authentication process
