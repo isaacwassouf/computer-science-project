@@ -1,8 +1,8 @@
 import {
 	PUBLIC_GOOGLE_OIDC_CONFIG_URL,
 	PUBLIC_GOOGLE_ID_TOKEN_ISSUER,
-    PUBLIC_FALLBACK_GOOGLE_JWKS_URL,
-    PUBLIC_FALLBACK_GOOGLE_TOKEN_ENDPOINT,
+	PUBLIC_FALLBACK_GOOGLE_JWKS_URL,
+	PUBLIC_FALLBACK_GOOGLE_TOKEN_ENDPOINT
 } from '$env/static/public';
 import { GOOGLE_CLIENT_ID, GOOGLE_REDIRECT, GOOGLE_CLIENT_SECRET } from '$env/static/private';
 import jwksClient, { JwksClient, type SigningKey } from 'jwks-rsa';
@@ -17,16 +17,19 @@ interface TokenResponse {
 	id_token: string;
 }
 
-export const getGoogleOIDCAttributeURL = async (attribute: string, fallback:string): Promise<URL> => {
+export const getGoogleOIDCAttributeURL = async (
+	attribute: string,
+	fallback: string
+): Promise<URL> => {
 	try {
-        // the google openID config discovery URL
+		// the google openID config discovery URL
 		const googleOpenIDConfigURL = new URL(PUBLIC_GOOGLE_OIDC_CONFIG_URL);
 		// fetch the google openID config
 		const googleOpenIDConfigResponse = await fetch(googleOpenIDConfigURL.toString());
 
-		// if the request fails, use the fallback token endpoint
+		// if the request fails, throw and error to use the fallback endpoint
 		if (!googleOpenIDConfigResponse.ok) {
-			error(401, 'Failed to fetch Google OpenID config');
+			throw new Error('Failed to fetch Google OpenID config');
 		}
 
 		// parse the response to json
@@ -92,7 +95,10 @@ export const verifyIDToken = async (idToken: string): Promise<JwtPayload> => {
 
 export const exchangeCodeWithTokens = async (code: string): Promise<TokenResponse> => {
 	// discover the google token endpoint
-	const googleTokenEndpoint = await getGoogleOIDCAttributeURL('token_endpoint', PUBLIC_FALLBACK_GOOGLE_TOKEN_ENDPOINT);
+	const googleTokenEndpoint = await getGoogleOIDCAttributeURL(
+		'token_endpoint',
+		PUBLIC_FALLBACK_GOOGLE_TOKEN_ENDPOINT
+	);
 	// prepare the request body data to suite application/x-www-form-urlencoded
 	const requestBody = new URLSearchParams();
 	// append the required data
