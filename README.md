@@ -18,16 +18,16 @@ In order to install the project successfully please follow the following steps.
 	```bash
 	docker compose up -d
 	```
-- Run the database migrations
+- Install the dependancies
 	```bash
-	pnpm drizzle-migrate
-	```
-- Run the database migrations
-	```bash
-	pnpm drizzle-migrate
+	pnpm install
 	```
 - Run the SvelkteKit application
 	```bash
 	pnpm dev
+	```
+- In a seperate terminal, run the database migrations
+	```bash
+	pnpm drizzle-migrate
 	```
  - Navigate to [http://localhost:5173/auth](http://localhost:5173/auth) to test the authentication process
