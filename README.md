@@ -1,6 +1,6 @@
 # Computer Science Project - Implementation of an OpenID Connect Rely Party
 
-This is the final submission for the **Project: Software Engineering (DLMCSPSE01)** course.
+This is the final submission for the **Project: Computer Science Project (DLMCSPCSP01)** course.
 
 # Installation
 
